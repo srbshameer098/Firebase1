@@ -1,5 +1,8 @@
+import 'package:firebase/UI/Home/Home_screen.dart';
 import 'package:firebase/UI/RoundButton.dart';
 import 'package:firebase/UI/Signup.dart';
+import 'package:firebase/UI/utiles/Utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,9 +16,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  bool loading = false;
   final formkey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+
+  final auth =FirebaseAuth.instance;
 
   @override
   void dispose() {
@@ -23,10 +29,31 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
     emailController.dispose();
     passwordController.dispose();
-    Signup.isLogin(context);
+
   }
   bool value = false;
   bool isVisible=false;
+
+  void login(){
+    setState(() {
+      loading = true;
+    });
+    auth.signInWithEmailAndPassword(
+        email: emailController.text,
+        password: passwordController.text.toString()).then((value) {
+          Utils().toastMessage(value.user!.email.toString());
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>Home_screen())
+          );
+          setState(() {
+            loading = false;
+          });
+
+    }).onError((error, stackTrace){
+      debugPrint(error.toString());
+      Utils().toastMessage(error.toString());
+    } );
+  }
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -96,11 +123,13 @@ class _HomePageState extends State<HomePage> {
   SizedBox(height: 50.h),
   RoundButton(
     title: 'Login',
+    loading: loading,
     onTap: () {
-      if (formkey.currentState!.validate()){
-
+      if(formkey.currentState!.validate()){
+        login();
       }
-    }
+
+    },
 
   ),
             SizedBox(height: 50.h,),

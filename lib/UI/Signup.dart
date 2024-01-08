@@ -1,5 +1,6 @@
 import 'package:firebase/UI/HomePage.dart';
 import 'package:firebase/UI/RoundButton.dart';
+import 'package:firebase/UI/utiles/Utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -14,6 +15,8 @@ class Signup extends StatefulWidget {
 }
 
 class _SignupState extends State<Signup> {
+
+  bool loading = false;
   final formkey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -81,7 +84,7 @@ class _SignupState extends State<Signup> {
                             child:isVisible==false? Icon(
                               Icons.remove_red_eye_outlined,size: 24,
                               color: Colors.grey,
-                            ):FaIcon(FontAwesomeIcons.eyeSlash,size: 20.sp,color: Colors.grey,),
+                            ):FaIcon(FontAwesomeIcons.eyeSlash,color: Colors.grey,),
                           )
 
                       ),
@@ -98,12 +101,26 @@ class _SignupState extends State<Signup> {
             SizedBox(height: 50.h),
             RoundButton(
                 title: 'Sign up',
+                loading: loading,
                 onTap: () {
                   if (formkey.currentState!.validate()){
+                   setState(() {
+                     loading =true;
+                   });
 
                     auth.createUserWithEmailAndPassword(
                         email: emailController.text.toString(),
-                        password: passwordController.text.toString());
+                        password: passwordController.text.toString()).then((value){
+                      setState(() {
+                        loading =false;
+                      });
+                    }).onError((error, stackTrace) {
+
+      Utils().toastMessage(error.toString());
+      setState(() {
+        loading =false;
+      });
+                    });
                   }
                 }
 
@@ -112,6 +129,7 @@ class _SignupState extends State<Signup> {
             Row(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text('Already have an account ?  ',style: TextStyle(color: Colors.black)),
+
 
                 GestureDetector(onTap: (){
                   Navigator.of(context)
