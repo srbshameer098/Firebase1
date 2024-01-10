@@ -7,6 +7,16 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+
+GoogleSignIn googleSignIn = GoogleSignIn(
+  scopes: <String> [
+    'email',
+    'https;//www.googleapis.com/auth/contacts.readonly'
+  ]
+);
+
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -17,6 +27,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool loading = false;
+  bool loading1 = false;
   final formkey = GlobalKey<FormState>();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
@@ -54,6 +65,10 @@ class _HomePageState extends State<HomePage> {
     } );
   }
 
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -70,6 +85,14 @@ class _HomePageState extends State<HomePage> {
         child: Column(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center,
           
           children: [
+
+
+
+
+
+
+
+
             Form(
               key: formkey,
                 child: Column(
@@ -132,6 +155,16 @@ class _HomePageState extends State<HomePage> {
     },
 
   ),
+            SizedBox(height: 30.h,),
+            RoundButton(Icons: FontAwesomeIcons.google,title: 'Google',
+                onTap: (){
+
+                    signinwithGoogle();
+
+                }
+            ),
+
+
             SizedBox(height: 50.h,),
             Row(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -149,5 +182,23 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
     );
+  }
+  void signinwithGoogle() async {
+    setState(() {
+      loading1 = true;
+    });
+
+    GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    GoogleSignInAuthentication? googleAuth= await googleUser?.authentication;
+
+    AuthCredential credential= GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken
+    );
+
+    UserCredential userCredential=await FirebaseAuth.instance.signInWithCredential(credential);
+
+    print(userCredential.user?.displayName);
   }
 }
