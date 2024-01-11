@@ -25,19 +25,22 @@ class RoundButton extends StatelessWidget {
         height: 50.w,
         decoration: BoxDecoration(
             color: Colors.blue, borderRadius: BorderRadius.circular(10.r)),
-        child: Row(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-           FaIcon(Icons,size: 24.sp,),
-            SizedBox(width: 15.w,),
-            Center(
-              child: loading
-                  ? CircularProgressIndicator(strokeWidth: 3,color: Colors.white,)
-                  : Text(
-                      title,
-                      style: TextStyle(color: Colors.white, fontSize: 18.sp),
-                    ),
-            ),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Row(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+             FaIcon(Icons,size: 24.sp,),
+              SizedBox(width: 15.w,),
+              Center(
+                child: loading
+                    ? CircularProgressIndicator(strokeWidth: 3,color: Colors.white,)
+                    : Text(
+                        title,
+                        style: TextStyle(color: Colors.white, fontSize: 18.sp),
+                      ),
+              ),
+            ],
+          ),
         ),
       ),
     );

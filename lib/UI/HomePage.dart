@@ -4,8 +4,8 @@ import 'package:firebase/UI/Signup.dart';
 import 'package:firebase/UI/utiles/Utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -66,6 +66,62 @@ class _HomePageState extends State<HomePage> {
   }
 
 
+  Future<dynamic> signInWithGoogle() async {
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+      final GoogleSignInAuthentication? googleAuth =
+      await googleUser?.authentication;
+
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+
+      return await FirebaseAuth.instance.signInWithCredential(credential);
+    } on Exception catch (e) {
+      // TODO
+      print('exception->$e');
+    }
+  }
+
+
+
+
+  //
+  // void signinwithGoogle() async {
+  //   setState(() {
+  //     loading = true;
+  //   });
+  //   final GoogleSignIn googleSignIn = GoogleSignIn();
+  //
+  //   try{
+  //
+  //
+  //     final  GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
+  //
+  //     if(googleSignInAccount != null) {
+  //       final GoogleSignInAuthentication? googleAuth = await
+  //       googleSignInAccount?.authentication;
+  //
+  //       final AuthCredential credential = GoogleAuthProvider.credential(
+  //           accessToken: googleAuth?.accessToken,
+  //           idToken: googleAuth?.idToken
+  //       );
+  //
+  //       await firebaseAuth.(credential);
+  //       Navigator.push(context, MaterialPageRoute(builder: (context)=>Home_screen())
+  //     }
+  //   }catch(e){
+  //
+  //   }
+
+
+
+
+
+
+  // }
 
 
 
@@ -156,12 +212,30 @@ class _HomePageState extends State<HomePage> {
 
   ),
             SizedBox(height: 30.h,),
-            RoundButton(Icons: FontAwesomeIcons.google,title: 'Google',
-                onTap: (){
 
-                    signinwithGoogle();
+            Padding(
+              padding: const EdgeInsets.only(left: 60.0),
+              child: Row(
+                children: [
 
-                }
+                  RoundButton(Icons: FontAwesomeIcons.google,title: 'Google',
+                      onTap: (){
+
+                        signInWithGoogle();
+
+                      }
+                  ),
+
+                  SizedBox(width: 30.w,),
+                  RoundButton(Icons: FontAwesomeIcons.phone,title: 'Phone',
+                      onTap: (){
+
+
+
+                      }
+                  ),
+                ],
+              ),
             ),
 
 
@@ -183,22 +257,28 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-  void signinwithGoogle() async {
-    setState(() {
-      loading1 = true;
-    });
 
-    GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
-    GoogleSignInAuthentication? googleAuth= await googleUser?.authentication;
 
-    AuthCredential credential= GoogleAuthProvider.credential(
-        accessToken: googleAuth?.accessToken,
-        idToken: googleAuth?.idToken
-    );
 
-    UserCredential userCredential=await FirebaseAuth.instance.signInWithCredential(credential);
 
-    print(userCredential.user?.displayName);
-  }
+
+
+
+  //
+  // void toastMessage(String message) {
+  //   Fluttertoast.showToast(
+  //       msg: message,
+  //       toastLength: Toast.LENGTH_SHORT,
+  //       gravity: ToastGravity.BOTTOM,
+  //       timeInSecForIosWeb: 1,
+  //       backgroundColor: Colors.red,
+  //       textColor: Colors.white,
+  //       fontSize: 16.0
+  //   );
+
+
+
+
+
 }
