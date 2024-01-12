@@ -1,4 +1,5 @@
 import 'package:firebase/UI/Home/Home_screen.dart';
+import 'package:firebase/UI/Phone.dart';
 import 'package:firebase/UI/RoundButton.dart';
 import 'package:firebase/UI/Signup.dart';
 import 'package:firebase/UI/utiles/Utils.dart';
@@ -9,14 +10,10 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-
-GoogleSignIn googleSignIn = GoogleSignIn(
-  scopes: <String> [
-    'email',
-    'https;//www.googleapis.com/auth/contacts.readonly'
-  ]
-);
-
+GoogleSignIn googleSignIn = GoogleSignIn(scopes: <String>[
+  'email',
+  'https;//www.googleapis.com/auth/contacts.readonly'
+]);
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -32,7 +29,7 @@ class _HomePageState extends State<HomePage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  final auth =FirebaseAuth.instance;
+  final auth = FirebaseAuth.instance;
 
   @override
   void dispose() {
@@ -40,38 +37,38 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
     emailController.dispose();
     passwordController.dispose();
-
   }
-  bool value = false;
-  bool isVisible=false;
 
-  void login(){
+  bool value = false;
+  bool isVisible = false;
+
+  void login() {
     setState(() {
       loading = true;
     });
-    auth.signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text.toString()).then((value) {
-          Utils().toastMessage(value.user!.email.toString());
-          Navigator.push(context, MaterialPageRoute(builder: (context)=>Home_screen())
-          );
-          setState(() {
-            loading = false;
-          });
-
-    }).onError((error, stackTrace){
+    auth
+        .signInWithEmailAndPassword(
+            email: emailController.text,
+            password: passwordController.text.toString())
+        .then((value) {
+      Utils().toastMessage(value.user!.email.toString());
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => Home_screen()));
+      setState(() {
+        loading = false;
+      });
+    }).onError((error, stackTrace) {
       debugPrint(error.toString());
       Utils().toastMessage(error.toString());
-    } );
+    });
   }
-
 
   Future<dynamic> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
       final GoogleSignInAuthentication? googleAuth =
-      await googleUser?.authentication;
+          await googleUser?.authentication;
 
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth?.accessToken,
@@ -84,9 +81,6 @@ class _HomePageState extends State<HomePage> {
       print('exception->$e');
     }
   }
-
-
-
 
   //
   // void signinwithGoogle() async {
@@ -116,41 +110,23 @@ class _HomePageState extends State<HomePage> {
   //
   //   }
 
-
-
-
-
-
   // }
-
-
 
   @override
   Widget build(BuildContext context) {
-    return  Scaffold(
-
+    return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
-
         title: Center(child: Text('Firebase')),
-
       ),
-
       body: Padding(
-        padding:  EdgeInsets.only(left:20.w,top: 20.h,right: 20.w),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center,
-          
+        padding: EdgeInsets.only(left: 20.w, top: 20.h, right: 20.w),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
-
-
-
-
-
-
-
             Form(
-              key: formkey,
+                key: formkey,
                 child: Column(
                   children: [
                     TextFormField(
@@ -159,16 +135,18 @@ class _HomePageState extends State<HomePage> {
                       decoration: InputDecoration(
                           hintText: 'Email',
                           // helperText: 'enter email e.g: example@gmail.com',
-                          prefixIcon: Icon(Icons.alternate_email_rounded,color: Colors.black,)
-                      ),
-                      validator: (value){
-                        if(value!.isEmpty){
+                          prefixIcon: Icon(
+                            Icons.alternate_email_rounded,
+                            color: Colors.black,
+                          )),
+                      validator: (value) {
+                        if (value!.isEmpty) {
                           return 'Enter email';
-                        }return null;
+                        }
+                        return null;
                       },
                     ),
                     SizedBox(height: 15.h),
-
                     TextFormField(
                       keyboardType: TextInputType.text,
                       controller: passwordController,
@@ -176,55 +154,64 @@ class _HomePageState extends State<HomePage> {
                       decoration: InputDecoration(
                           hintText: 'Password',
                           // helperText: 'enter password e.g: 123456',
-                          prefixIcon: Icon(Icons.lock_outline_rounded,color: Colors.black,),
-                        suffixIcon:  GestureDetector(onTap: (){
-                          setState((){
-                            isVisible=!isVisible;
-                          });
-                        },
-                          child:isVisible==false? Icon(
-                            Icons.remove_red_eye_outlined,size: 24,
-                            color: Colors.grey,
-                          ):FaIcon(FontAwesomeIcons.eyeSlash,size: 20.sp,color: Colors.grey,),
-                        )
-
-                      ),
-                      validator: (value){
-                        if(value!.isEmpty){
+                          prefixIcon: Icon(
+                            Icons.lock_outline_rounded,
+                            color: Colors.black,
+                          ),
+                          suffixIcon: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                isVisible = !isVisible;
+                              });
+                            },
+                            child: isVisible == false
+                                ? Icon(
+                                    Icons.remove_red_eye_outlined,
+                                    size: 24,
+                                    color: Colors.grey,
+                                  )
+                                : FaIcon(
+                                    FontAwesomeIcons.eyeSlash,
+                                    size: 20.sp,
+                                    color: Colors.grey,
+                                  ),
+                          )),
+                      validator: (value) {
+                        if (value!.isEmpty) {
                           return 'Enter password';
-                        }return null;
+                        }
+                        return null;
                       },
                     ),
                   ],
                 )),
-
-
-  SizedBox(height: 50.h),
-  RoundButton(
-    title: 'Login',
-    loading: loading,
-    onTap: () {
-      if(formkey.currentState!.validate()){
-        login();
-      }
-
-    },
-
-  ),
-            SizedBox(height: 30.h,),
-
+            SizedBox(height: 50.h),
+            RoundButton(
+              title: 'Login',
+              loading: loading,
+              onTap: () {
+                if (formkey.currentState!.validate()) {
+                  login();
+                }
+              },
+            ),
+            SizedBox(
+              height: 30.h,
+            ),
             Padding(
-              padding: const EdgeInsets.only(left: 60.0),
+              padding: const EdgeInsets.only(left: 45.0),
               child: Row(
                 children: [
-
-                  RoundButton(Icons: FontAwesomeIcons.google,title: 'Google',
+                  RoundButton(
+                      Icons: FontAwesomeIcons.google,
+                      title: 'Google',
                       onTap: () {
                         signInWithGoogle().then((value) {
                           Utils().toastMessage(value.user!.email.toString());
-                          Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => Home_screen())
-                          );
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => Home_screen()));
                           setState(() {
                             loading = false;
                           });
@@ -233,31 +220,39 @@ class _HomePageState extends State<HomePage> {
                           Utils().toastMessage(error.toString());
                         });
                       }),
-
-                  SizedBox(width: 30.w,),
-                  RoundButton(Icons: FontAwesomeIcons.phone,title: 'Phone',
-                      onTap: (){
-
-
-
-                      }
+                  SizedBox(
+                    width: 30.w,
                   ),
+                  RoundButton(
+                      Icons: FontAwesomeIcons.phone,
+                      title: 'Phone',
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => LogInWithPhoneNumber()));
+                      }),
                 ],
               ),
             ),
-
-
-            SizedBox(height: 50.h,),
-            Row(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center,
+            SizedBox(
+              height: 50.h,
+            ),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Don`t have an account ?  ',style: TextStyle(color: Colors.black)),
-
+                Text('Don`t have an account ?  ',
+                    style: TextStyle(color: Colors.black)),
                 GestureDetector(
-                    onTap: (){
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(builder:(context) =>Signup()));
+                    onTap: () {
+                      Navigator.of(context).push(
+                          MaterialPageRoute(builder: (context) => Signup()));
                     },
-                    child: Text('Sign up ',style: TextStyle(color: Colors.blueAccent),))
+                    child: Text(
+                      'Sign up ',
+                      style: TextStyle(color: Colors.blueAccent),
+                    ))
               ],
             )
           ],
@@ -265,14 +260,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-
-
-
-
-
-
-
-
-
-
 }
