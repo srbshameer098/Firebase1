@@ -219,12 +219,20 @@ class _HomePageState extends State<HomePage> {
                 children: [
 
                   RoundButton(Icons: FontAwesomeIcons.google,title: 'Google',
-                      onTap: (){
-
-                        signInWithGoogle();
-
-                      }
-                  ),
+                      onTap: () {
+                        signInWithGoogle().then((value) {
+                          Utils().toastMessage(value.user!.email.toString());
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => Home_screen())
+                          );
+                          setState(() {
+                            loading = false;
+                          });
+                        }).onError((error, stackTrace) {
+                          debugPrint(error.toString());
+                          Utils().toastMessage(error.toString());
+                        });
+                      }),
 
                   SizedBox(width: 30.w,),
                   RoundButton(Icons: FontAwesomeIcons.phone,title: 'Phone',
@@ -262,20 +270,6 @@ class _HomePageState extends State<HomePage> {
 
 
 
-
-
-
-  //
-  // void toastMessage(String message) {
-  //   Fluttertoast.showToast(
-  //       msg: message,
-  //       toastLength: Toast.LENGTH_SHORT,
-  //       gravity: ToastGravity.BOTTOM,
-  //       timeInSecForIosWeb: 1,
-  //       backgroundColor: Colors.red,
-  //       textColor: Colors.white,
-  //       fontSize: 16.0
-  //   );
 
 
 
