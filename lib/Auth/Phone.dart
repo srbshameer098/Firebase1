@@ -1,5 +1,5 @@
-import 'package:firebase/UI/RoundButton.dart';
-import 'package:firebase/UI/Verify_code.dart';
+import 'package:firebase/Widgets/RoundButton.dart';
+import 'package:firebase/Auth/Verify_code.dart';
 import 'package:firebase/UI/utiles/Utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

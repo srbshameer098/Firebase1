@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:lottie/lottie.dart';
 
-import 'Home/Home_screen.dart';
-import 'Home/page2.dart';
+import '../UI/Home/Home_screen.dart';
+import '../UI/Home/page2.dart';
 
 class RoundButton extends StatelessWidget {
   final bool loading;

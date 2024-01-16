@@ -1,7 +1,7 @@
 import 'package:firebase/UI/Home/Home_screen.dart';
-import 'package:firebase/UI/Phone.dart';
-import 'package:firebase/UI/RoundButton.dart';
-import 'package:firebase/UI/Signup.dart';
+import 'package:firebase/Auth/Phone.dart';
+import 'package:firebase/Widgets/RoundButton.dart';
+import 'package:firebase/Auth/Signup.dart';
 import 'package:firebase/UI/utiles/Utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -116,8 +116,9 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.blueAccent,
-        title: Center(child: Text('Firebase')),
+        title: Center(child: Text('Login')),
       ),
       body: Padding(
         padding: EdgeInsets.only(left: 20.w, top: 20.h, right: 20.w),
