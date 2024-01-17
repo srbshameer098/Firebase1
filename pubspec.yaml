@@ -45,6 +45,7 @@ dependencies:
   fluttertoast: ^8.2.4
   google_sign_in: ^6.2.1
   lottie: ^3.0.0
+  firebase_database: ^10.4.0
 
 
 

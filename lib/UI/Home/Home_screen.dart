@@ -1,4 +1,5 @@
 import 'package:firebase/Auth/login_screen.dart';
+import 'package:firebase/UI/Home/add_posts.dart';
 import 'package:firebase/UI/Home/page2.dart';
 import 'package:firebase/UI/utiles/Utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -36,10 +37,41 @@ class _Home_screenState extends State<Home_screen> {
        const SizedBox(width: 10,)
      ],
       ),
+
       body: Padding(
         padding:  EdgeInsets.symmetric(horizontal: 40),
         child: Column(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center,
           children: [
+
+
+
+
+
+
+
+
+
+
+            FloatingActionButton(onPressed: (){
+
+              Navigator.push(context, MaterialPageRoute(builder: (context) => AddPostScreen()));
+
+            },
+              child: Icon(Icons.add),
+            ),
+
+
+
+
+
+
+
+
+
+
+
+
+
             const Text('Welcome to flutter World',style: TextStyle(fontSize: 24),),
             // Container(width: 200,
             //     height: 200,
@@ -50,19 +82,33 @@ class _Home_screenState extends State<Home_screen> {
             //       fit: BoxFit.fill,)
             //     ),
 
-            LoadingButton(title: 'play', onTap: () {
-              setState(() {
-                loading = true;
-              });
-              Future.delayed(Duration(seconds: 5),(){
-                setState(() {
-                  loading=false;
-                });
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context)=>page2()));
-              });
+            // LoadingButton(title: 'play', onTap: () {
+            //   setState(() {
+            //     loading = true;
+            //   });
+            //   Future.delayed(Duration(seconds: 5),(){
+            //     setState(() {
+            //       loading=false;
+            //     });
+            //     Navigator.push(context,
+            //         MaterialPageRoute(builder: (context)=>page2()));
+            //   });
+            //
+            // },)
 
-            },)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
           ],
         ),
