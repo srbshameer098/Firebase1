@@ -3,6 +3,8 @@ import 'package:firebase/UI/Home/add_posts.dart';
 import 'package:firebase/UI/Home/page2.dart';
 import 'package:firebase/UI/utiles/Utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -19,6 +21,11 @@ class Home_screen extends StatefulWidget {
 class _Home_screenState extends State<Home_screen> {
 
   final auth = FirebaseAuth.instance;
+  final ref = FirebaseDatabase.instance.ref('Post');
+
+  
+  
+  
   @override
   Widget build(BuildContext context) {
     return  Scaffold(
@@ -38,63 +45,45 @@ class _Home_screenState extends State<Home_screen> {
      ],
       ),
 
-      body: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 40),
-        child: Column(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+      body: Column(
+        children: [
 
 
 
+          Expanded(child: StreamBuilder(
+            stream: ref.onValue,
+            builder: (context,AsyncSnapshot<DatabaseEvent> sanpshot){
+
+              if(snapshot.hasData){
+
+              }else {
+
+              }
+              return ListView.builder(
+                itemCount: snapshot.data.snapshot.children.lenth,
+                  itemBuilder: (context,index){
 
 
-
-
-
-
-
-            FloatingActionButton(onPressed: (){
-
-              Navigator.push(context, MaterialPageRoute(builder: (context) => AddPostScreen()));
-
+                return ListTile(
+                  title: Text('asdfr'),
+                );
+              }
+              );
             },
-              child: Icon(Icons.add),
+          )),
+          Expanded(
+            child: FirebaseAnimatedList(
+                query: ref,
+                defaultChild: Text('Loading'),
+                itemBuilder: (context, snapshot, animation, index){
+
+                  return ListTile(
+                      title:Text (snapshot.child('title').value.toString()),
+                    subtitle: Text(snapshot.child('id').value.toString()),
+                    );
+            }
             ),
-
-
-
-
-
-
-
-
-
-
-
-
-
-            const Text('Welcome to flutter World',style: TextStyle(fontSize: 24),),
-            // Container(width: 200,
-            //     height: 200,
-            //     child: Lottie.asset(
-            //       'assets/animi.json',
-            //       width: 200,
-            //       height: 200,
-            //       fit: BoxFit.fill,)
-            //     ),
-
-            // LoadingButton(title: 'play', onTap: () {
-            //   setState(() {
-            //     loading = true;
-            //   });
-            //   Future.delayed(Duration(seconds: 5),(){
-            //     setState(() {
-            //       loading=false;
-            //     });
-            //     Navigator.push(context,
-            //         MaterialPageRoute(builder: (context)=>page2()));
-            //   });
-            //
-            // },)
+          ),
 
 
 
@@ -110,9 +99,61 @@ class _Home_screenState extends State<Home_screen> {
 
 
 
-          ],
-        ),
+
+
+
+
+
+          // const Text('Welcome to flutter World',style: TextStyle(fontSize: 24),),
+          // Container(width: 200,
+          //     height: 200,
+          //     child: Lottie.asset(
+          //       'assets/animi.json',
+          //       width: 200,
+          //       height: 200,
+          //       fit: BoxFit.fill,)
+          //     ),
+
+          // LoadingButton(title: 'play', onTap: () {
+          //   setState(() {
+          //     loading = true;
+          //   });
+          //   Future.delayed(Duration(seconds: 5),(){
+          //     setState(() {
+          //       loading=false;
+          //     });
+          //     Navigator.push(context,
+          //         MaterialPageRoute(builder: (context)=>page2()));
+          //   });
+          //
+          // },)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        ],
       ),
+
+
+      floatingActionButton: FloatingActionButton(onPressed: (){
+
+        Navigator.push(context, MaterialPageRoute(builder: (context) => AddPostScreen()));
+
+      },
+        child: Icon(Icons.add),
+      ),
+
     );
   }
 }
