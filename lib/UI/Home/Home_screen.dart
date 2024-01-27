@@ -25,6 +25,7 @@ class _Home_screenState extends State<Home_screen> {
   final auth = FirebaseAuth.instance;
   final ref = FirebaseDatabase.instance.ref('Post');
   final editController = TextEditingController();
+  final SearchFilter = TextEditingController() ;
 
 
 
@@ -62,8 +63,76 @@ class _Home_screenState extends State<Home_screen> {
           )
         ],
       ),
-      body: Column(
-        children: [
+      body: Padding(
+        padding:  EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          children: [
+
+            SizedBox(height: 20.h,),
+
+
+            SizedBox(
+              height: 50.h,
+              child: TextFormField(
+                controller: SearchFilter,
+                decoration: InputDecoration(
+                  hintText: 'Search',
+                      border: OutlineInputBorder()
+                ),
+                onChanged: (String value){
+                  setState(() {
+
+                  });
+                },
+              ),
+            ),
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // Expanded(
+            //     child: StreamBuilder(
+            //   stream: ref.onValue,
+            //   builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
+            //     if (snapshot.connectionState==ConnectionState.waiting) {
+            //       return Center(
+            //           child: SizedBox(
+            //               width: 30,
+            //               height: 30,
+            //               child: CircularProgressIndicator()));
+            //     }
+            //
+            //       if (snapshot.hasData) {
+            //         Map<dynamic, dynamic> map =
+            //         snapshot.data!.snapshot.value as dynamic;
+            //         List<dynamic> list = [];
+            //         list.clear();
+            //         list = map.values.toList();
+            //         return ListView.builder(
+            //             itemCount: snapshot.data!.snapshot.children.length,
+            //             itemBuilder: (context, index) {
+            //               return ListTile(
+            //                 title: Text(list[index]['title']),
+            //               );
+            //             });
+            //
+            //     }
+            //     if (snapshot.hasError) {
+            //       return Center(
+            //         child: Text("Error"),
+            //       );
+            //     }else{return SizedBox();}
+            //   },
+            // )),
 
 
 
@@ -80,118 +149,129 @@ class _Home_screenState extends State<Home_screen> {
 
 
 
-          // Expanded(
-          //     child: StreamBuilder(
-          //   stream: ref.onValue,
-          //   builder: (context, AsyncSnapshot<DatabaseEvent> snapshot) {
-          //     if (snapshot.connectionState==ConnectionState.waiting) {
-          //       return Center(
-          //           child: SizedBox(
-          //               width: 30,
-          //               height: 30,
-          //               child: CircularProgressIndicator()));
-          //     }
-          //
-          //       if (snapshot.hasData) {
-          //         Map<dynamic, dynamic> map =
-          //         snapshot.data!.snapshot.value as dynamic;
-          //         List<dynamic> list = [];
-          //         list.clear();
-          //         list = map.values.toList();
-          //         return ListView.builder(
-          //             itemCount: snapshot.data!.snapshot.children.length,
-          //             itemBuilder: (context, index) {
-          //               return ListTile(
-          //                 title: Text(list[index]['title']),
-          //               );
-          //             });
-          //
-          //     }
-          //     if (snapshot.hasError) {
-          //       return Center(
-          //         child: Text("Error"),
-          //       );
-          //     }else{return SizedBox();}
-          //   },
-          // )),
+            Expanded(
+              child: FirebaseAnimatedList(
+                  query: ref,
+                  defaultChild: Center(child: Text('Loading')),
+                  itemBuilder: (context, snapshot, animation, index) {
+                    final  title = snapshot.child('title').value.toString();
+                    final  product = snapshot.child('product').value.toString();
+
+                    if (SearchFilter.text.isEmpty){
 
 
+                    return ListTile(
+                      title: Text(snapshot.child('title').value.toString()),
+
+                      // subtitle: Text(snapshot.child('id').value.toString()),
+
+                      subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(snapshot.child('id').value.toString()),
+                          Text(snapshot.child('product').value.toString()),
+                        ],
+                      ),
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-          Expanded(
-            child: FirebaseAnimatedList(
-                query: ref,
-                defaultChild: Text('Loading'),
-                itemBuilder: (context, snapshot, animation, index) {
-                  final  title = snapshot.child('title').value.toString();
-                  return ListTile(
-                    title: Text(snapshot.child('title').value.toString()),
-                    subtitle: Text(snapshot.child('id').value.toString()),
-                    trailing: PopupMenuButton(
-                        icon: Icon(Icons.more_vert),
-                        itemBuilder: (context) => [
-                          PopupMenuItem(
+                      trailing: PopupMenuButton(
+                          icon: Icon(Icons.more_vert),
+                          itemBuilder: (context) => [
+                            PopupMenuItem(
+                                value:1,
+                                child: ListTile(
+                                  onTap: (){
+                                    Navigator.pop(context);
+                                    showMyDialog(title , snapshot.child('id').value.toString());
+                                  },
+                                  leading: Icon(Icons.edit),
+                                  title: Text('Edit'),
+                                )),
+                            PopupMenuItem(
                               value:1,
-                              child: ListTile(
-                                onTap: (){
-                                  Navigator.pop(context);
-                                  showMyDialog(title , snapshot.child('id').value.toString());
-                                },
-                                leading: Icon(Icons.edit),
-                                title: Text('Edit'),
-                              )),
-                          PopupMenuItem(
-                            value:1,
-                              child: ListTile(
-                                onTap: (){
-                                  Navigator.pop(context);
-                                  ref.child(snapshot.child('id').value.toString()).remove();
-                                },
-                                leading: Icon(Icons.delete_outline),
-                                title: Text('Delete'),
-                              ))
-                        ]
-                    ),
-                  );
-                }),
-          ),
+                                child: ListTile(
+                                  onTap: (){
+                                    Navigator.pop(context);
+                                    ref.child(snapshot.child('id').value.toString()).remove();
+                                  },
+                                  leading: Icon(Icons.delete_outline),
+                                  title: Text('Delete'),
+                                ))
+                          ]
+                      ),
+                    );
+                    }else if(title.toLowerCase().contains(SearchFilter.text.toLowerCase().toLowerCase())){
 
-          // const Text('Welcome to flutter World',style: TextStyle(fontSize: 24),),
-          // Container(width: 200,
-          //     height: 200,
-          //     child: Lottie.asset(
-          //       'assets/animi.json',
-          //       width: 200,
-          //       height: 200,
-          //       fit: BoxFit.fill,)
-          //     ),
+                      return ListTile(
+                        title: Text(snapshot.child('title').value.toString()),
 
-          // LoadingButton(title: 'play', onTap: () {
-          //   setState(() {
-          //     loading = true;
-          //   });
-          //   Future.delayed(Duration(seconds: 5),(){
-          //     setState(() {
-          //       loading=false;
-          //     });
-          //     Navigator.push(context,
-          //         MaterialPageRoute(builder: (context)=>page2()));
-          //   });
-          //
-          // },)
-        ],
+                        // subtitle: Text(snapshot.child('id').value.toString()),
+                        subtitle: Column(
+                          children: [
+                            Text(snapshot.child('id').value.toString()),
+                            Text(snapshot.child('product').value.toString()),
+                          ],
+                        ),
+                        // Text(snapshot.child('product').value.toString()),
+
+                        trailing: PopupMenuButton(
+                            icon: Icon(Icons.more_vert),
+                            itemBuilder: (context) => [
+                              PopupMenuItem(
+                                  value:1,
+                                  child: ListTile(
+                                    onTap: (){
+                                      Navigator.pop(context);
+                                      showMyDialog(title , snapshot.child('id').value.toString());
+                                    },
+                                    leading: Icon(Icons.edit),
+                                    title: Text('Edit'),
+                                  )),
+                              PopupMenuItem(
+                                  value:1,
+                                  child: ListTile(
+                                    onTap: (){
+                                      Navigator.pop(context);
+                                      ref.child(snapshot.child('id').value.toString()).remove();
+                                    },
+                                    leading: Icon(Icons.delete_outline),
+                                    title: Text('Delete'),
+                                  ))
+                            ]
+                        ),
+                      );
+
+                    }else {
+                      return Container();
+                    }
+                  }
+                  ),
+            ),
+
+            // const Text('Welcome to flutter World',style: TextStyle(fontSize: 24),),
+            // Container(width: 200,
+            //     height: 200,
+            //     child: Lottie.asset(
+            //       'assets/animi.json',
+            //       width: 200,
+            //       height: 200,
+            //       fit: BoxFit.fill,)
+            //     ),
+
+            // LoadingButton(title: 'play', onTap: () {
+            //   setState(() {
+            //     loading = true;
+            //   });
+            //   Future.delayed(Duration(seconds: 5),(){
+            //     setState(() {
+            //       loading=false;
+            //     });
+            //     Navigator.push(context,
+            //         MaterialPageRoute(builder: (context)=>page2()));
+            //   });
+            //
+            // },)
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {

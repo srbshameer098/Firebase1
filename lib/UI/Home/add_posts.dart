@@ -12,6 +12,7 @@ class AddPostScreen extends StatefulWidget {
 class _AddPostScreenState extends State<AddPostScreen> {
 
   final postController = TextEditingController();
+  final productController = TextEditingController();
   bool loading = false;
   final databaseRef = FirebaseDatabase.instance.ref('Post');
 
@@ -35,6 +36,14 @@ class _AddPostScreenState extends State<AddPostScreen> {
                 border: OutlineInputBorder()
               ),
             ),
+            TextFormField(
+              maxLines: 4,
+              controller: productController,
+              decoration: InputDecoration(
+                  hintText: "Enter the Product",
+                  border: OutlineInputBorder()
+              ),
+            ),
 
             SizedBox(height: 30,),
 
@@ -50,6 +59,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
 
               databaseRef.child(id).set({
                 'title':postController.text.toString(),
+                'product':productController.text.toString(),
                 'id':id
               }).then((value) {
                 Utils().toastMessage('Post added');
