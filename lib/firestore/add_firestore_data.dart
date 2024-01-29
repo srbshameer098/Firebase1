@@ -62,10 +62,13 @@ class _AddFireStoreDataState extends State<AddFireStoreData> {
                   });
 
                   String id  = DateTime.now().millisecondsSinceEpoch.toString();
-                  fireStore.doc().set({
+                  fireStore.doc(id).set({
                     'title' : postController.text.toString(),
                     'id'  :  id
                   }).then((value) {
+                    setState(() {
+                      loading=false;
+                    });
                     Utils().toastMessage('Post added');
 
                   }).onError((error, stackTrace) {
