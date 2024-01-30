@@ -37,7 +37,7 @@ class RoundButton extends StatelessWidget {
               SizedBox(width: 15.w,),
               Center(
                 child: loading
-                    ? CircularProgressIndicator(strokeWidth: 3,color: Colors.white,)
+                    ? const CircularProgressIndicator(strokeWidth: 3,color: Colors.white,)
                     : Text(
                         title,
                         style: TextStyle(color: Colors.white, fontSize: 18.sp),
@@ -77,12 +77,12 @@ class _LoadingButtonState extends State<LoadingButton> {
         setState(() {
           loading = true;
         });
-        Future.delayed(Duration(seconds: 5),(){
+        Future.delayed(const Duration(seconds: 5),(){
           setState(() {
             loading=false;
           });
           Navigator.push(context,
-              MaterialPageRoute(builder: (context)=>page2()));
+              MaterialPageRoute(builder: (context)=>const page2()));
         });
 
       },

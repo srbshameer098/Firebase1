@@ -20,18 +20,18 @@ class _AddPostScreenState extends State<AddPostScreen> {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
-        title: Text('Add Post'),
+        title: const Text('Add Post'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
-            SizedBox(height: 30,),
+            const SizedBox(height: 30,),
 
             TextFormField(
               maxLines: 4,
               controller: postController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: "What is in your mind ? ",
                 border: OutlineInputBorder()
               ),
@@ -39,13 +39,13 @@ class _AddPostScreenState extends State<AddPostScreen> {
             TextFormField(
               maxLines: 4,
               controller: productController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   hintText: "Enter the Product",
                   border: OutlineInputBorder()
               ),
             ),
 
-            SizedBox(height: 30,),
+            const SizedBox(height: 30,),
 
             RoundButton(title: "Add",
                 loading: loading,
@@ -90,11 +90,11 @@ class _AddPostScreenState extends State<AddPostScreen> {
       context: context,
       builder: (BuildContext context){
         return AlertDialog(
-          title: Text('Update'),
+          title: const Text('Update'),
           content: Container(
-            child: TextField(),
+            child: const TextField(),
           ),
-          actions: [],
+          actions: const [],
         );
 
       }

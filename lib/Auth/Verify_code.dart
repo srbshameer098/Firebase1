@@ -24,7 +24,7 @@ class _Verify_codeState extends State<Verify_code> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
-        title: Center(
+        title: const Center(
           child: Text('Verify'),
         ),
       ),
@@ -36,7 +36,7 @@ class _Verify_codeState extends State<Verify_code> {
             TextFormField(
               keyboardType: TextInputType.phone,
               controller: verificationCodeController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
 
                   hintText: '6 digit code'
               ),
@@ -58,7 +58,7 @@ class _Verify_codeState extends State<Verify_code> {
 
                 await auth.signInWithCredential(credential);
                 Navigator.push(context,
-                    MaterialPageRoute(builder: (context)=> Home_screen()));
+                    MaterialPageRoute(builder: (context)=> const Home_screen()));
               }catch(e){
 
                 setState(() {

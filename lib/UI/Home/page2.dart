@@ -1,4 +1,3 @@
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 class page2 extends StatefulWidget {
   const page2({Key? key}) : super(key: key);
@@ -12,7 +11,7 @@ class _page2State extends State<page2> {
   Widget build(BuildContext context) {
     return  Scaffold(
       appBar: AppBar(
-        title: Text('page2',)
+        title: const Text('page2',)
       ),
     );
   }

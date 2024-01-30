@@ -3,7 +3,6 @@ import 'package:firebase/Widgets/RoundButton.dart';
 import 'package:firebase/UI/utiles/Utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -39,7 +38,7 @@ class _SignupState extends State<Signup> {
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
 
-        title: Center(child: Text('Signup')),
+        title: const Center(child: Text('Signup')),
 
       ),
 
@@ -55,7 +54,7 @@ class _SignupState extends State<Signup> {
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,
                       controller: emailController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           hintText: 'Email',
                           // helperText: 'enter email e.g: example@gmail.com',
                           prefixIcon: Icon(Icons.alternate_email_rounded,color: Colors.black,)
@@ -75,16 +74,16 @@ class _SignupState extends State<Signup> {
                       decoration: InputDecoration(
                           hintText: 'Password',
                           // helperText: 'enter password e.g: 123456',
-                          prefixIcon: Icon(Icons.lock_outline_rounded,color: Colors.black,),
+                          prefixIcon: const Icon(Icons.lock_outline_rounded,color: Colors.black,),
                           suffixIcon:  GestureDetector(onTap: (){
                             setState((){
                               isVisible=!isVisible;
                             });
                           },
-                            child:isVisible==false? Icon(
+                            child:isVisible==false? const Icon(
                               Icons.remove_red_eye_outlined,size: 24,
                               color: Colors.grey,
-                            ):FaIcon(FontAwesomeIcons.eyeSlash,color: Colors.grey,),
+                            ):const FaIcon(FontAwesomeIcons.eyeSlash,color: Colors.grey,),
                           )
 
                       ),
@@ -128,14 +127,14 @@ class _SignupState extends State<Signup> {
             SizedBox(height: 50.h,),
             Row(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Already have an account ?  ',style: TextStyle(color: Colors.black)),
+                const Text('Already have an account ?  ',style: TextStyle(color: Colors.black)),
 
 
                 GestureDetector(onTap: (){
                   Navigator.of(context)
-                      .push(MaterialPageRoute(builder:(context) =>HomePage()));
+                      .push(MaterialPageRoute(builder:(context) =>const HomePage()));
                 },
-                    child: Text('Login ',style: TextStyle(color: Colors.blueAccent),))
+                    child: const Text('Login ',style: TextStyle(color: Colors.blueAccent),))
               ],
             )
           ],

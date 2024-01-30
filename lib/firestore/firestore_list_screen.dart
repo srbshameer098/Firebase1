@@ -5,15 +5,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 import 'package:firebase/Auth/login_screen.dart';
-import 'package:firebase/UI/Home/add_posts.dart';
-import 'package:firebase/UI/Home/page2.dart';
 import 'package:firebase/UI/utiles/Utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/ui/firebase_animated_list.dart';
-import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 
 
@@ -53,7 +46,7 @@ class _FireStoreScreenState extends State<FireStoreScreen> {
               onPressed: () {
                 auth.signOut().then((value) {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomePage()));
+                      MaterialPageRoute(builder: (context) => const HomePage()));
                 }).onError((error, stackTrace) {
                   Utils().toastMessage(error.toString());
                 });
@@ -65,7 +58,7 @@ class _FireStoreScreenState extends State<FireStoreScreen> {
         ],
       ),
       body: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 10),
+        padding:  const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
 
@@ -129,11 +122,13 @@ class _FireStoreScreenState extends State<FireStoreScreen> {
             StreamBuilder<QuerySnapshot>(
               stream: fireStore,
               builder: (BuildContext context,AsyncSnapshot<QuerySnapshot> snapshot){
-                if(snapshot.connectionState == ConnectionState.waiting)
-                  return CircularProgressIndicator();
+                if(snapshot.connectionState == ConnectionState.waiting) {
+                  return const CircularProgressIndicator();
+                }
 
-                if(snapshot.hasError)
-                  return Text('Some error');
+                if(snapshot.hasError) {
+                  return const Text('Some error');
+                }
                 return Expanded(
                   child: ListView.builder(
                       itemCount: snapshot.data!.docs.length,
@@ -191,9 +186,9 @@ class _FireStoreScreenState extends State<FireStoreScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddFireStoreData()));
+              MaterialPageRoute(builder: (context) => const AddFireStoreData()));
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -207,11 +202,11 @@ class _FireStoreScreenState extends State<FireStoreScreen> {
         context: context,
         builder: (BuildContext context){
           return AlertDialog(
-            title: Text('Update'),
+            title: const Text('Update'),
             content: Container(
               child: TextField(
                 controller: editController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Edit',
                 ),
               ),
@@ -219,12 +214,12 @@ class _FireStoreScreenState extends State<FireStoreScreen> {
             actions: [
               TextButton(onPressed: (){
                 Navigator.pop(context);
-              }, child: Text('Cancel')),
+              }, child: const Text('Cancel')),
               TextButton(onPressed: (){
                 Navigator.pop(context);
 
 
-              }, child: Text('Update')),
+              }, child: const Text('Update')),
 
             ],
           );

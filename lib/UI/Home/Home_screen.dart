@@ -1,15 +1,12 @@
 import 'package:firebase/Auth/login_screen.dart';
 import 'package:firebase/UI/Home/add_posts.dart';
-import 'package:firebase/UI/Home/page2.dart';
 import 'package:firebase/UI/utiles/Utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
-import 'package:lottie/lottie.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../Widgets/RoundButton.dart';
 
 bool loading = false;
 
@@ -52,7 +49,7 @@ class _Home_screenState extends State<Home_screen> {
               onPressed: () {
                 auth.signOut().then((value) {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomePage()));
+                      MaterialPageRoute(builder: (context) => const HomePage()));
                 }).onError((error, stackTrace) {
                   Utils().toastMessage(error.toString());
                 });
@@ -64,7 +61,7 @@ class _Home_screenState extends State<Home_screen> {
         ],
       ),
       body: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 10),
+        padding:  const EdgeInsets.symmetric(horizontal: 10),
         child: Column(
           children: [
 
@@ -75,7 +72,7 @@ class _Home_screenState extends State<Home_screen> {
               height: 50.h,
               child: TextFormField(
                 controller: SearchFilter,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Search',
                       border: OutlineInputBorder()
                 ),
@@ -152,7 +149,7 @@ class _Home_screenState extends State<Home_screen> {
             Expanded(
               child: FirebaseAnimatedList(
                   query: ref,
-                  defaultChild: Center(child: Text('Loading')),
+                  defaultChild: const Center(child: Text('Loading')),
                   itemBuilder: (context, snapshot, animation, index) {
                     final  title = snapshot.child('title').value.toString();
                     final  product = snapshot.child('product').value.toString();
@@ -174,7 +171,7 @@ class _Home_screenState extends State<Home_screen> {
 
 
                       trailing: PopupMenuButton(
-                          icon: Icon(Icons.more_vert),
+                          icon: const Icon(Icons.more_vert),
                           itemBuilder: (context) => [
                             PopupMenuItem(
                                 value:1,
@@ -183,8 +180,8 @@ class _Home_screenState extends State<Home_screen> {
                                     Navigator.pop(context);
                                     showMyDialog(title , snapshot.child('id').value.toString());
                                   },
-                                  leading: Icon(Icons.edit),
-                                  title: Text('Edit'),
+                                  leading: const Icon(Icons.edit),
+                                  title: const Text('Edit'),
                                 )),
                             PopupMenuItem(
                               value:1,
@@ -193,8 +190,8 @@ class _Home_screenState extends State<Home_screen> {
                                     Navigator.pop(context);
                                     ref.child(snapshot.child('id').value.toString()).remove();
                                   },
-                                  leading: Icon(Icons.delete_outline),
-                                  title: Text('Delete'),
+                                  leading: const Icon(Icons.delete_outline),
+                                  title: const Text('Delete'),
                                 ))
                           ]
                       ),
@@ -214,7 +211,7 @@ class _Home_screenState extends State<Home_screen> {
                         // Text(snapshot.child('product').value.toString()),
 
                         trailing: PopupMenuButton(
-                            icon: Icon(Icons.more_vert),
+                            icon: const Icon(Icons.more_vert),
                             itemBuilder: (context) => [
                               PopupMenuItem(
                                   value:1,
@@ -223,8 +220,8 @@ class _Home_screenState extends State<Home_screen> {
                                       Navigator.pop(context);
                                       showMyDialog(title , snapshot.child('id').value.toString());
                                     },
-                                    leading: Icon(Icons.edit),
-                                    title: Text('Edit'),
+                                    leading: const Icon(Icons.edit),
+                                    title: const Text('Edit'),
                                   )),
                               PopupMenuItem(
                                   value:1,
@@ -233,8 +230,8 @@ class _Home_screenState extends State<Home_screen> {
                                       Navigator.pop(context);
                                       ref.child(snapshot.child('id').value.toString()).remove();
                                     },
-                                    leading: Icon(Icons.delete_outline),
-                                    title: Text('Delete'),
+                                    leading: const Icon(Icons.delete_outline),
+                                    title: const Text('Delete'),
                                   ))
                             ]
                         ),
@@ -276,9 +273,9 @@ class _Home_screenState extends State<Home_screen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => AddPostScreen()));
+              MaterialPageRoute(builder: (context) => const AddPostScreen()));
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
     );
   }
@@ -292,11 +289,11 @@ class _Home_screenState extends State<Home_screen> {
         context: context,
         builder: (BuildContext context){
           return AlertDialog(
-            title: Text('Update'),
+            title: const Text('Update'),
             content: Container(
               child: TextField(
                 controller: editController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   hintText: 'Edit',
                 ),
               ),
@@ -304,7 +301,7 @@ class _Home_screenState extends State<Home_screen> {
             actions: [
               TextButton(onPressed: (){
                 Navigator.pop(context);
-              }, child: Text('Cancel')),
+              }, child: const Text('Cancel')),
               TextButton(onPressed: (){
                 Navigator.pop(context);
                 ref.child(id).update({
@@ -315,7 +312,7 @@ class _Home_screenState extends State<Home_screen> {
                 }).onError((error, stackTrace){
                   Utils().toastMessage(error.toString());
                 });
-              }, child: Text('Update')),
+              }, child: const Text('Update')),
 
             ],
           );

@@ -6,7 +6,6 @@ import 'package:firebase/UI/utiles/Utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -53,7 +52,7 @@ class _HomePageState extends State<HomePage> {
         .then((value) {
       Utils().toastMessage(value.user!.email.toString());
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => Home_screen()));
+          context, MaterialPageRoute(builder: (context) => const Home_screen()));
       setState(() {
         loading = false;
       });
@@ -118,7 +117,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         automaticallyImplyLeading: false,
         backgroundColor: Colors.blueAccent,
-        title: Center(child: Text('Login')),
+        title: const Center(child: Text('Login')),
       ),
       body: Padding(
         padding: EdgeInsets.only(left: 20.w, top: 20.h, right: 20.w),
@@ -133,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,
                       controller: emailController,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           hintText: 'Email',
                           // helperText: 'enter email e.g: example@gmail.com',
                           prefixIcon: Icon(
@@ -155,7 +154,7 @@ class _HomePageState extends State<HomePage> {
                       decoration: InputDecoration(
                           hintText: 'Password',
                           // helperText: 'enter password e.g: 123456',
-                          prefixIcon: Icon(
+                          prefixIcon: const Icon(
                             Icons.lock_outline_rounded,
                             color: Colors.black,
                           ),
@@ -166,7 +165,7 @@ class _HomePageState extends State<HomePage> {
                               });
                             },
                             child: isVisible == false
-                                ? Icon(
+                                ? const Icon(
                                     Icons.remove_red_eye_outlined,
                                     size: 24,
                                     color: Colors.grey,
@@ -212,7 +211,7 @@ class _HomePageState extends State<HomePage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => Home_screen()));
+                                  builder: (context) => const Home_screen()));
                           setState(() {
                             loading = false;
                           });
@@ -231,7 +230,7 @@ class _HomePageState extends State<HomePage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LogInWithPhoneNumber()));
+                                builder: (context) => const LogInWithPhoneNumber()));
                       }),
                 ],
               ),
@@ -243,14 +242,14 @@ class _HomePageState extends State<HomePage> {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Don`t have an account ?  ',
+                const Text('Don`t have an account ?  ',
                     style: TextStyle(color: Colors.black)),
                 GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context) => Signup()));
+                          MaterialPageRoute(builder: (context) => const Signup()));
                     },
-                    child: Text(
+                    child: const Text(
                       'Sign up ',
                       style: TextStyle(color: Colors.blueAccent),
                     ))

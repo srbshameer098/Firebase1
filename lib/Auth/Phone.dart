@@ -23,7 +23,7 @@ class _LogInWithPhoneNumberState extends State<LogInWithPhoneNumber> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blueAccent,
-        title: Center(
+        title: const Center(
           child: Text('Phone'),
         ),
       ),
@@ -35,7 +35,7 @@ class _LogInWithPhoneNumberState extends State<LogInWithPhoneNumber> {
             TextFormField(
               keyboardType: TextInputType.phone,
               controller: PhoneNumberController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
 
                 hintText: '+91 00000 00000'
               ),
