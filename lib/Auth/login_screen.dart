@@ -1,3 +1,4 @@
+import 'package:firebase/Auth/forgot_password.dart';
 import 'package:firebase/UI/Home/Home_screen.dart';
 import 'package:firebase/Auth/Phone.dart';
 import 'package:firebase/Widgets/RoundButton.dart';
@@ -186,7 +187,7 @@ class _HomePageState extends State<HomePage> {
                   ],
                 )),
             SizedBox(height: 50.h),
-            RoundButton(
+            RoundButton1(
               title: 'Login',
               loading: loading,
               onTap: () {
@@ -195,6 +196,17 @@ class _HomePageState extends State<HomePage> {
                 }
               },
             ),
+
+            Align(
+              alignment: Alignment.bottomRight,
+              child: TextButton(onPressed: (){
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const ForgotPasswordScreen()));
+              },
+                  child: Text('Forget Password ?')),
+            ),
+
+
             SizedBox(
               height: 30.h,
             ),

@@ -98,7 +98,7 @@ class _SignupState extends State<Signup> {
 
 
             SizedBox(height: 50.h),
-            RoundButton(
+            RoundButton1(
                 title: 'Sign up',
                 loading: loading,
                 onTap: () {

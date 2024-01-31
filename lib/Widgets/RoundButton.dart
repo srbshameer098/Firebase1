@@ -52,6 +52,61 @@ class RoundButton extends StatelessWidget {
 }
 
 
+
+
+
+
+class RoundButton1 extends StatelessWidget {
+  final bool loading;
+  final String title;
+  final dynamic Icons;
+
+  final VoidCallback onTap;
+
+  const RoundButton1(
+      {Key? key,
+        required this.title,
+        required this.onTap,
+        this.loading = false,
+        this.Icons})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: 50.w,
+        decoration: BoxDecoration(
+            color: Colors.blue, borderRadius: BorderRadius.circular(10.r)),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(crossAxisAlignment: CrossAxisAlignment.center,mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+
+              Center(
+                child: loading
+                    ? const CircularProgressIndicator(strokeWidth: 3,color: Colors.white,)
+                    : Text(
+                  title,
+                  style: TextStyle(color: Colors.white, fontSize: 18.sp),
+                ),
+              ),
+
+
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+
+
+
+
+
 class LoadingButton extends StatefulWidget {
   final String title;
   final dynamic Icons;

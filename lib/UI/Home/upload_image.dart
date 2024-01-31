@@ -80,7 +80,7 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
                 loading =true;
               });
               firebase_storage.Reference ref =
-              firebase_storage.FirebaseStorage.instance.ref('/foldername'+DateTime.now().millisecondsSinceEpoch.toString());
+              firebase_storage.FirebaseStorage.instance.ref('/SRB/'+DateTime.now().millisecondsSinceEpoch.toString());
               firebase_storage.UploadTask uploadTask = ref.putFile(_image!.absolute);
 
               await Future.value(uploadTask);
@@ -88,7 +88,7 @@ class _UploadImageScreenState extends State<UploadImageScreen> {
                var newUrl = await ref.getDownloadURL();
 
 
-               databaseRef.child('1').set({
+               databaseRef.child('2').set({
                  'id' : '1212',
                  'title' : newUrl.toString()
                }).then((value) {
