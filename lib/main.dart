@@ -3,14 +3,22 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import 'UI/Home/Notification_Screen.dart';
 import 'firebase_options.dart';
 import 'package:firebase/firebase_services/firebase_api.dart';
 
+final navigatorKey = GlobalKey<NavigatorState>();
+
 void main() async{
+
+  //  firebase connecting  //
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  //  Push notification connecting  //
+
   await FirebaseApi().initNotifications();
   runApp(const MyApp());
 
@@ -47,6 +55,11 @@ class MyApp extends StatelessWidget {
             useMaterial3: false,
           ),
           home: const SplashScreen(),
+          navigatorKey: navigatorKey,
+          routes:
+            {
+              '/Notification_Screen': (context)=> const Notification_Screen(),
+            }
         );}
     );
   }

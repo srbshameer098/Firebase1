@@ -1,4 +1,5 @@
 import 'package:firebase/Auth/login_screen.dart';
+import 'package:firebase/UI/Home/Notification_Screen.dart';
 import 'package:firebase/UI/Home/add_posts.dart';
 import 'package:firebase/UI/utiles/Utils.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -55,8 +56,19 @@ class _Home_screenState extends State<Home_screen> {
                 });
               },
               icon: const Icon(Icons.logout_outlined)),
+
           const SizedBox(
             width: 10,
+          ),
+
+          IconButton(onPressed: (){
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const Notification_Screen()));
+          },
+              icon: Icon(Icons.notifications_none)),
+
+          const SizedBox(
+            width: 20,
           )
         ],
       ),
