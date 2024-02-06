@@ -1,4 +1,5 @@
 import 'package:firebase/Auth/login_screen.dart';
+import 'package:firebase/UI/Home/Notification_List.dart';
 import 'package:firebase/UI/Home/Notification_Screen.dart';
 import 'package:firebase/UI/Home/add_posts.dart';
 import 'package:firebase/UI/utiles/Utils.dart';
@@ -63,7 +64,7 @@ class _Home_screenState extends State<Home_screen> {
 
           IconButton(onPressed: (){
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Notification_Screen()));
+                MaterialPageRoute(builder: (context) => const Notification_List()));
           },
               icon: Icon(Icons.notifications_none)),
 
@@ -81,7 +82,7 @@ class _Home_screenState extends State<Home_screen> {
 
 
             SizedBox(
-              height: 50.h,
+              //
               child: TextFormField(
                 controller: SearchFilter,
                 decoration: const InputDecoration(
@@ -164,13 +165,15 @@ class _Home_screenState extends State<Home_screen> {
                   defaultChild: const Center(child: Text('Loading')),
                   itemBuilder: (context, snapshot, animation, index) {
                     final  title = snapshot.child('title').value.toString();
-                    final  product = snapshot.child('product').value.toString();
+                    final  productname = snapshot.child('product_name').value.toString();
+                    final  productsize = snapshot.child('product_size').value.toString();
+                    final  productcolor = snapshot.child('product_color').value.toString();
 
                     if (SearchFilter.text.isEmpty){
 
 
                     return ListTile(
-                      title: Text(snapshot.child('title').value.toString()),
+                      title: Center(child: Text(snapshot.child('title').value.toString())),
 
                       // subtitle: Text(snapshot.child('id').value.toString()),
 
@@ -210,42 +213,51 @@ class _Home_screenState extends State<Home_screen> {
                     );
                     }else if(title.toLowerCase().contains(SearchFilter.text.toLowerCase().toLowerCase())){
 
-                      return ListTile(
-                        title: Text(snapshot.child('title').value.toString()),
+                      return Container(
+                        decoration: BoxDecoration(
 
-                        // subtitle: Text(snapshot.child('id').value.toString()),
-                        subtitle: Column(
-                          children: [
-                            Text(snapshot.child('id').value.toString()),
-                            Text(snapshot.child('product').value.toString()),
-                          ],
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(
+                                color: Colors.black
+                            )
                         ),
-                        // Text(snapshot.child('product').value.toString()),
+                        child: ListTile(
+                          title: Center(child: Text(snapshot.child('title').value.toString())),
 
-                        trailing: PopupMenuButton(
-                            icon: const Icon(Icons.more_vert),
-                            itemBuilder: (context) => [
-                              PopupMenuItem(
-                                  value:1,
-                                  child: ListTile(
-                                    onTap: (){
-                                      Navigator.pop(context);
-                                      showMyDialog(title , snapshot.child('id').value.toString());
-                                    },
-                                    leading: const Icon(Icons.edit),
-                                    title: const Text('Edit'),
-                                  )),
-                              PopupMenuItem(
-                                  value:1,
-                                  child: ListTile(
-                                    onTap: (){
-                                      Navigator.pop(context);
-                                      ref.child(snapshot.child('id').value.toString()).remove();
-                                    },
-                                    leading: const Icon(Icons.delete_outline),
-                                    title: const Text('Delete'),
-                                  ))
-                            ]
+                          // subtitle: Text(snapshot.child('id').value.toString()),
+                          subtitle: Column(
+                            children: [
+                              Text(snapshot.child('id').value.toString()),
+                              Text(snapshot.child('product').value.toString()),
+                            ],
+                          ),
+                          // Text(snapshot.child('product').value.toString()),
+
+                          trailing: PopupMenuButton(
+                              icon: const Icon(Icons.more_vert),
+                              itemBuilder: (context) => [
+                                PopupMenuItem(
+                                    value:1,
+                                    child: ListTile(
+                                      onTap: (){
+                                        Navigator.pop(context);
+                                        showMyDialog(title , snapshot.child('id').value.toString());
+                                      },
+                                      leading: const Icon(Icons.edit),
+                                      title: const Text('Edit'),
+                                    )),
+                                PopupMenuItem(
+                                    value:1,
+                                    child: ListTile(
+                                      onTap: (){
+                                        Navigator.pop(context);
+                                        ref.child(snapshot.child('id').value.toString()).remove();
+                                      },
+                                      leading: const Icon(Icons.delete_outline),
+                                      title: const Text('Delete'),
+                                    ))
+                              ]
+                          ),
                         ),
                       );
 
@@ -319,7 +331,7 @@ class _Home_screenState extends State<Home_screen> {
                 ref.child(id).update({
                   'title' : editController.text.toLowerCase()
                 }).then((value) {
-                  Utils().toastMessage('Ppost Updated');
+                  Utils().toastMessage('Post Updated');
 
                 }).onError((error, stackTrace){
                   Utils().toastMessage(error.toString());
