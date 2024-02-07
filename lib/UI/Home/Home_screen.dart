@@ -180,7 +180,9 @@ class _Home_screenState extends State<Home_screen> {
                       subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(snapshot.child('id').value.toString()),
-                          Text(snapshot.child('product').value.toString()),
+                          Text(snapshot.child('product_name').value.toString()),
+                          Text(snapshot.child('product_size').value.toString()),
+                          Text(snapshot.child('product_color').value.toString()),
                         ],
                       ),
 
@@ -222,13 +224,15 @@ class _Home_screenState extends State<Home_screen> {
                             )
                         ),
                         child: ListTile(
-                          title: Center(child: Text(snapshot.child('title').value.toString())),
+                          title: Text(snapshot.child('title').value.toString()),
 
                           // subtitle: Text(snapshot.child('id').value.toString()),
                           subtitle: Column(
                             children: [
                               Text(snapshot.child('id').value.toString()),
-                              Text(snapshot.child('product').value.toString()),
+                              Text(snapshot.child('product_name').value.toString()),
+                              Text(snapshot.child('product_size').value.toString()),
+                              Text(snapshot.child('product_color').value.toString()),
                             ],
                           ),
                           // Text(snapshot.child('product').value.toString()),
@@ -307,7 +311,7 @@ class _Home_screenState extends State<Home_screen> {
 
 
 
-  Future<void> showMyDialog(String title, String id)async{
+  Future<void> showMyDialog(String title, String id,)async{
     editController.text = title ;
     return showDialog(
         context: context,

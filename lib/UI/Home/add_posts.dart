@@ -14,6 +14,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
   final postController = TextEditingController();
   final productnameController = TextEditingController();
   final productsizeController = TextEditingController();
+  final productcolorController = TextEditingController();
   bool loading = false;
   final databaseRef = FirebaseDatabase.instance.ref('Post');
 
@@ -25,67 +26,78 @@ class _AddPostScreenState extends State<AddPostScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          children: [
-            const SizedBox(height: 30,),
-
-            TextFormField(
-              maxLines: 4,
-              controller: postController,
-              decoration: const InputDecoration(
-                hintText: "Enter the Product Title ",
-                border: OutlineInputBorder()
-              ),
-            ),
-            TextFormField(
-              maxLines: 4,
-              controller: productnameController,
-              decoration: const InputDecoration(
-                  hintText: "Enter the Product Name",
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 30,),
+          
+              TextFormField(
+                maxLines: 4,
+                controller: postController,
+                decoration: const InputDecoration(
+                  hintText: "Enter the Product Title ",
                   border: OutlineInputBorder()
+                ),
               ),
-            ),
-
-            TextFormField(
-              maxLines: 4,
-              controller: productsizeController,
-              decoration: const InputDecoration(
-                  hintText: "Enter the Product Size",
-                  border: OutlineInputBorder()
+              TextFormField(
+                maxLines: 4,
+                controller: productnameController,
+                decoration: const InputDecoration(
+                    hintText: "Enter the Product Name",
+                    border: OutlineInputBorder()
+                ),
               ),
-            ),
-
-            const SizedBox(height: 30,),
-
-            RoundButton(title: "Add",
-                loading: loading,
-                onTap: () {
-
-              setState(() {
-                loading = true;
-              });
-
-              String id = DateTime.now().millisecondsSinceEpoch.toString();
-
-              databaseRef.child(id).set({
-                'title':postController.text.toString(),
-                'product_Name':productnameController.text.toString(),
-                'product_Size':productsizeController.text.toString(),
-                'product_Color':productsizeController.text.toString(),
-                'id':id
-              }).then((value) {
-                Utils().toastMessage('Post added');
+          
+              TextFormField(
+                maxLines: 4,
+                controller: productsizeController,
+                decoration: const InputDecoration(
+                    hintText: "Enter the Product Size",
+                    border: OutlineInputBorder()
+                ),
+              ),
+          
+              TextFormField(
+                maxLines: 4,
+                controller: productcolorController,
+                decoration: const InputDecoration(
+                    hintText: "Enter the Product Color",
+                    border: OutlineInputBorder()
+                ),
+              ),
+          
+              const SizedBox(height: 30,),
+          
+              RoundButton(title: "Add",
+                  loading: loading,
+                  onTap: () {
+          
                 setState(() {
-                  loading = false;
+                  loading = true;
                 });
-              }).onError((error, stackTrace) {
-                Utils().toastMessage(error.toString());
-                setState(() {
-                  loading = false;
+          
+                String id = DateTime.now().millisecondsSinceEpoch.toString();
+          
+                databaseRef.child(id).set({
+                  'title':postController.text.toString(),
+                  'product_Name':productnameController.text.toString(),
+                  'product_Size':productsizeController.text.toString(),
+                  'product_Color':productcolorController.text.toString(),
+                  'id':id
+                }).then((value) {
+                  Utils().toastMessage('Post added');
+                  setState(() {
+                    loading = false;
+                  });
+                }).onError((error, stackTrace) {
+                  Utils().toastMessage(error.toString());
+                  setState(() {
+                    loading = false;
+                  });
                 });
-              });
-            } )
-          ],
+              } )
+            ],
+          ),
         ),
       ),
     );
