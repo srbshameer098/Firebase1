@@ -33,6 +33,7 @@ class _Home_screenState extends State<Home_screen> {
 
 
 
+
   @override
   void initState() {
     // TODO: implement initState
@@ -165,24 +166,27 @@ class _Home_screenState extends State<Home_screen> {
                   defaultChild: const Center(child: Text('Loading')),
                   itemBuilder: (context, snapshot, animation, index) {
                     final  title = snapshot.child('title').value.toString();
-                    final  productname = snapshot.child('product_name').value.toString();
-                    final  productsize = snapshot.child('product_size').value.toString();
-                    final  productcolor = snapshot.child('product_color').value.toString();
+                    final  product_Name = snapshot.child('product_Name').value.toString();
+                    final  product_Size = snapshot.child('product_Size').value.toString();
+                    final  product_Color = snapshot.child('product_Color').value.toString();
 
                     if (SearchFilter.text.isEmpty){
 
 
                     return ListTile(
-                      title: Center(child: Text(snapshot.child('title').value.toString())),
+                      title: Padding(
+                        padding:  EdgeInsets.symmetric(vertical: 10.h),
+                        child: Center(child: Text(snapshot.child('title').value.toString(),style: TextStyle(fontSize: 30.sp),)),
+                      ),
 
                       // subtitle: Text(snapshot.child('id').value.toString()),
 
                       subtitle: Column(crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(snapshot.child('id').value.toString()),
-                          Text(snapshot.child('product_name').value.toString()),
-                          Text(snapshot.child('product_size').value.toString()),
-                          Text(snapshot.child('product_color').value.toString()),
+                          Text(snapshot.child('product_Name').value.toString()),
+                          Text(snapshot.child('product_Size').value.toString()),
+                          Text(snapshot.child('product_Color').value.toString()),
                         ],
                       ),
 
@@ -224,15 +228,15 @@ class _Home_screenState extends State<Home_screen> {
                             )
                         ),
                         child: ListTile(
-                          title: Text(snapshot.child('title').value.toString()),
+                          title: Text(snapshot.child('title').value.toString(),style: TextStyle(fontSize: 30.sp),),
 
                           // subtitle: Text(snapshot.child('id').value.toString()),
                           subtitle: Column(
                             children: [
                               Text(snapshot.child('id').value.toString()),
-                              Text(snapshot.child('product_name').value.toString()),
-                              Text(snapshot.child('product_size').value.toString()),
-                              Text(snapshot.child('product_color').value.toString()),
+                              Text(snapshot.child('product_Name').value.toString()),
+                              Text(snapshot.child('product_Size').value.toString()),
+                              Text(snapshot.child('product_Color').value.toString()),
                             ],
                           ),
                           // Text(snapshot.child('product').value.toString()),

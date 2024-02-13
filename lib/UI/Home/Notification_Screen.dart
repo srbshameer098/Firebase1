@@ -1,6 +1,7 @@
 import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 class Notification_Screen extends StatefulWidget {
   const Notification_Screen({Key? key}) : super(key: key);
 
@@ -27,40 +28,48 @@ final databaseRef = FirebaseDatabase.instance.ref('Notification');
       appBar: AppBar(
         title:Text( 'Notification'),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding:  EdgeInsets.symmetric(horizontal: 10,vertical: 10),
-            child: Container(
-
-              decoration: BoxDecoration(
-
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(
-                      color: Colors.black
-                  )
-              ),
-              child: Padding(
-                padding:  EdgeInsets.symmetric(horizontal: 10,vertical: 5),
-                child: Row(
-                  children: [
-
-                    SizedBox(width: 190,
-                      child: Column(
-                        children: [
-                          message==null?Text("")  :Text(message.notification!.title.toString(),style: TextStyle(fontWeight: FontWeight.w700,fontSize: 22,color: Colors.black),),
-                          message==null?Text(""):   Text(message.notification!.body.toString(),style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16,color: Colors.grey),),
-                        ],
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Padding(
+              padding:  EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+              child: Container(
+        
+                decoration: BoxDecoration(
+        
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                        color: Colors.black
+                    )
+                ),
+                child: Padding(
+                  padding:  EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+                  child: Row(
+                    children: [
+        
+                      SizedBox(width: 310,
+                        child: Column(
+                          children: [
+                            message==null?Text(""):   Padding(
+                              padding:  EdgeInsets.symmetric(vertical: 10),
+                              child: Text(message.notification!.title.toString(),style: TextStyle(fontWeight: FontWeight.w700,fontSize: 22,color: Colors.black),),
+                            ),
+                            message==null?Text(""):   Padding(
+                              padding:  EdgeInsets.symmetric(vertical: 10.h),
+                              child: Text(message.notification!.body.toString(),style: TextStyle(fontWeight: FontWeight.w400,fontSize: 16,color: Colors.grey.shade600),),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-
-                  ],
+        
+                    ],
+                  ),
                 ),
               ),
-            ),
-          )
-
-        ],
+            )
+        
+          ],
+        ),
       ),
     );
   }
